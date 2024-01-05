@@ -1,0 +1,25 @@
+{
+  "name": "kiz-app",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev --tunnel-url=https://6cae-42-114-38-153.ngrok-free.app:3000",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy"
+  },
+  "dependencies": {
+    "@shopify/app": "3.52.0",
+    "@shopify/cli": "3.52.0"
+  },
+  "author": "Admin",
+  "private": true,
+  "workspaces": [
+    "extensions/*",
+    "web",
+    "web/frontend"
+  ]
+}

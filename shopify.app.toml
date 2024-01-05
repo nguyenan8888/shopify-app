@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "kiz-app"
+client_id = "5aedb02a0daec079797f1ba2ed6f0aa6"
+application_url = "https://6cae-42-114-38-153.ngrok-free.app"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://6cae-42-114-38-153.ngrok-free.app/auth/callback",
+  "https://6cae-42-114-38-153.ngrok-free.app/auth/shopify/callback",
+  "https://6cae-42-114-38-153.ngrok-free.app/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-bc83118a.myshopify.com"

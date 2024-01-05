@@ -1,0 +1,38 @@
+.plugin {
+    padding: 12px;
+    display: flex;
+    gap: .75rem;
+}
+
+.plugin:hover {
+    background-color: rgba(0,0,0,0.01);
+    cursor: pointer;
+}
+
+.plugin:hover .plugin_icon {
+    background-color: #d4ccff;
+}
+
+.plugin:hover .plugin_info>div:first-child {
+    text-decoration: underline;
+}
+
+.plugin:not(:first-child) {
+    border-top: 1px solid #ccc;
+}
+
+.plugin_icon {
+    width: 48px;
+    height: 48px;
+    background-color: #e4deff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.plugin_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
