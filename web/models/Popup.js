@@ -1,4 +1,5 @@
 import { Schema, Types, model } from "mongoose";
+import shopify from "../shopify.js";
 
 const Popup = model(
   "Popup",
@@ -42,8 +43,19 @@ export default Popup;
 }
  */
 
-export const initPopUp = async (data) => {
+export const initPopUp = async (data, session) => {
   const popUp = new Popup(data);
+
+  const metafieldPopup = new shopify.api.rest.Metafield({
+    session,
+  });
+
+  metafieldPopup.namespace = "kiz-app-plugin";
+  metafieldPopup.key = "pop-up";
+  metafieldPopup.type = "json";
+  metafieldPopup.value = JSON.stringify(data);
+
+  await metafieldPopup.save();
 
   return await popUp.save();
 };
@@ -54,4 +66,15 @@ export const getShopPopup = async ({ shopId }) => {
 
 export const updateShopPopup = async (data) => {
   await Popup.findByIdAndUpdate(data?._id, data);
-}
+};
+
+export const inActiveShopPopup = async ({ shopId }) => {
+  await Popup.updateOne(
+    {
+      shop: shopId,
+    },
+    {
+      active: false,
+    }
+  );
+};

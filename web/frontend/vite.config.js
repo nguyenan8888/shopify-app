@@ -47,7 +47,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
-    "process.env.data": JSON.stringify(process.env.FRONTEND_PORT),
   },
   resolve: {
     preserveSymlinks: true,

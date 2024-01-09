@@ -1,12 +1,11 @@
 import express from "express";
 
-import { router, publicRouter } from "./popup.js";
+import { router as popupRouter } from "./popup.js";
+import { router as appEmbededRouter } from "./app-embeded.js";
 
 const apiRouter = express.Router();
-const publicApiRouter = express.Router();
 
-apiRouter.use("/popup", router);
+apiRouter.use("/popup", popupRouter);
+apiRouter.use("/app-embeded", appEmbededRouter);
 
-publicApiRouter.use("/popup", publicRouter);
-
-export { apiRouter, publicApiRouter };
+export { apiRouter };

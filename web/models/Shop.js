@@ -9,6 +9,10 @@ const Shop = model(
       country: String,
       phone: String,
       shop_owner: String,
+      active: {
+        type: Boolean,
+        default: true,
+      },
     },
     { timestamps: true }
   )
@@ -36,4 +40,8 @@ export const createShop = async ({ name, country, phone, shopOwner, id }) => {
 
 export const isFirstTime = async ({ shopId }) => {
   return !Boolean(await Shop.findById(shopId));
+};
+
+export const toggleShop = async ({ shopId, active = false }) => {
+  await Shop.updateOne({ _id: shopId }, { active });
 };

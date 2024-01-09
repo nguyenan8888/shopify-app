@@ -28,32 +28,20 @@
 </div>
 
 <script>
-
   (function start() {
     const app = document.getElementById("app");
     const closeBtn = document.querySelector(".modal_icon");
-    const url = "https://" + {{ shop.domain | json
-  }} + "/apps/k-app/public/popup?shopId=" + {{ shop.id | json }}
 
-  closeBtn.addEventListener("click", () => {
-    app.style.opacity = 0;
-    setTimeout(() => {
-      app.style.display = "none";
-    }, 100)
-  })
+    closeBtn.addEventListener("click", () => {
+      app.style.opacity = 0;
+      setTimeout(() => {
+        app.style.display = "none";
+      }, 100)
+    })
 
-  fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((respData) => {
-      const data = respData?.popup;
-
-      if (data?.active) showPopup(data);
-    });
+    const data = {{ shop.metafields.kiz-app-plugin.pop-up }};
+  if (data.active)
+    showPopup(data);
 
   function showPopup(data) {
     const titleEl = document.getElementById("title");
@@ -68,7 +56,7 @@
     titleEl.style.color = data?.text_color
     descriptionEl.innerText = data?.description
     descriptionEl.style.color = data?.text_color
-    imageEl.src = data?.image
+    if (data?.image) imageEl.src = data?.image
     buttonEl.innerText = data?.button_text
     buttonEl.style.backgroundColor = data?.button_color
     rightEl.style.backgroundColor = data?.bg_color

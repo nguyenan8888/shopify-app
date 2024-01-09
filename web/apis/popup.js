@@ -1,7 +1,8 @@
 import express from "express";
-import shopify from "../shopify.js";
+import _ from "lodash";
 
-import Popup, { getShopPopup, updateShopPopup } from "../models/Popup.js";
+import shopify from "../shopify.js";
+import { getShopPopup, updateShopPopup } from "../models/Popup.js";
 
 const router = express.Router();
 const publicRouter = express.Router();
@@ -15,16 +16,6 @@ router.get("/", async (req, res) => {
 
   const popup = await getShopPopup({ shopId: shop?.id });
 
-  // const sessionId = await shopify.api.session.getCurrentId({
-  //   isOnline: false,
-  //   rawRequest: req,
-  //   rawResponse: res,
-  // });
-
-  // const session = await shopify.config.sessionStorage.loadSession(sessionId);
-
-  // console.log("SESSION: ", session);
-
   res.status(200).json(popup);
 });
 
@@ -32,24 +23,28 @@ router.put("/", async (req, res) => {
   const data = JSON.parse(req.body);
 
   let code = 200;
-  updateShopPopup(data).catch(() => {
+  try {
+    await updateShopPopup(data);
+    const allData = await shopify.api.rest.Metafield.all({
+      session: res.locals.shopify.session,
+    });
+
+    // find and update metafield
+    const metafieldPopup = allData.data.find(
+      (metafield) =>
+        metafield.namespace === "kiz-app-plugin" && metafield.key === "pop-up"
+    );
+
+    metafieldPopup.value = JSON.stringify(
+      _.omit(data, ["_id", "createdAt", "updatedAt", "__v"])
+    );
+
+    await metafieldPopup.save();
+  } catch {
     code = 400;
-  });
+  }
 
   res.status(code).json({ isSuccess: code === 200 });
 });
 
-publicRouter.get("/", async (req, res) => {
-  const shopId = req.query.shopId;
-  let code = 200;
-
-  const popup = await Popup.findOne({ shop: shopId });
-
-  if (!popup) {
-    code = 404;
-  }
-
-  res.status(code).json({ popup, isSuccess: code === 200 });
-});
-
-export { router, publicRouter };
+export { router };

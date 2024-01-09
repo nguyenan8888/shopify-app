@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   Checkbox,
   Divider,
@@ -248,7 +249,9 @@ export default function Popup() {
                 </Card>
               </Grid.Cell>
               <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
-                <div style={{ position: "sticky", top: ".5rem", bottom: ".5rem" }}>
+                <div
+                  style={{ position: "sticky", top: ".5rem", bottom: ".5rem" }}
+                >
                   <Card>
                     <Preview data={data} />
                   </Card>

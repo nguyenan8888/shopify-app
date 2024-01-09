@@ -1,4 +1,6 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
+import { inActiveShopPopup, updateShopPopup } from "./models/Popup.js";
+import { toggleShop } from "./models/Shop.js";
 
 /**
  * @type {{[key: string]: import("@shopify/shopify-api").WebhookHandler}}
@@ -101,12 +103,9 @@ export default {
     callbackUrl: "/api/webhooks",
     callback: async (topic, shop, body, webhookId) => {
       const payload = JSON.parse(body);
-      console.log("APP_UNINSTALL");
-      // Payload has the following shape:
-      // {
-      //   "shop_id": 954889,
-      //   "shop_domain": "{shop}.myshopify.com"
-      // }
+
+      await inActiveShopPopup({ shopId: payload.id });
+      await toggleShop({ shopId: payload.id });
     },
   },
 };

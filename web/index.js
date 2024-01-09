@@ -10,7 +10,7 @@ dotenv.config();
 import shopify from "./shopify.js";
 import webhookHandlers from "./privacy.js";
 import connectMongodb from "./database/connect_mongo.js";
-import { apiRouter, publicApiRouter } from "./apis/index.js";
+import { apiRouter } from "./apis/index.js";
 import { verifyFirstInstall } from "./middlewares/verifyFirstInstall.js";
 
 const PORT = parseInt(
@@ -41,8 +41,6 @@ app.post(
     webhookHandlers,
   })
 );
-
-app.use("/api/public", publicApiRouter);
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js

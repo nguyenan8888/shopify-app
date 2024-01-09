@@ -6,7 +6,7 @@
   "scripts": {
     "shopify": "shopify",
     "build": "shopify app build",
-    "dev": "shopify app dev --tunnel-url=https://6cae-42-114-38-153.ngrok-free.app:3000",
+    "dev": "shopify app dev --tunnel-url=https://b049-118-71-165-20.ngrok-free.app:3000",
     "info": "shopify app info",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy"
